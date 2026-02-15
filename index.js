@@ -23,7 +23,7 @@ mongoose.connect(process.env.DBCON)
 
 app.use(cors({
   origin: [
-    'https://wedding-car-client.vercel.app/',
+    'https://wedding-car-client.vercel.app',
     'http://localhost:5173'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
