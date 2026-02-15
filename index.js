@@ -19,7 +19,19 @@ mongoose.connect(process.env.DBCON)
   });
 
 // middleware
-app.use(cors());
+// app.use(cors());
+
+app.use(cors({
+  origin: [
+    'https://wedding-car-client.vercel.app/',
+    'http://localhost:5173'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
