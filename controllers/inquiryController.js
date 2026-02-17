@@ -127,13 +127,13 @@ const createInquiry = async (req, res) => {
     // --- EMAIL SENDING LOGIC ---
     
     // 2. Transporter setup (Gmail ke liye)
-    // const transporter = nodemailer.createTransport({
-    //   service: 'gmail',
-    //   auth: {
-    //     user: process.env.EMAIL_USER, // Aapka Gmail address
-    //     pass: process.env.EMAIL_PASS  // Aapka Gmail App Password
-    //   }
-    // });
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER, // Aapka Gmail address
+        pass: process.env.EMAIL_PASS  // Aapka Gmail App Password
+      }
+    });
 
 
 
@@ -148,27 +148,12 @@ const createInquiry = async (req, res) => {
 // });
 
 
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS
-//   }
-// });
 
 
 
 
 
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.gmail.com",
-//   port: 587,
-//   secure: false,
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS
-//   }
-// });
+
 
     
 
@@ -255,8 +240,55 @@ const deleteInquiry = async (req, res) => {
   }
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 3. Update Inquiry Status (Pending -> Completed etc.)
+const updateInquiryStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body; // Frontend se naya status aayega
+
+    // Update query
+    const updatedInquiry = await Inquiry.findByIdAndUpdate(
+      id,
+      { status: status },
+      { new: true } // Ye option zaroori hai taaki updated data wapas mile
+    );
+
+    if (!updatedInquiry) {
+      return res.status(404).json({ success: false, message: "Inquiry not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Status updated successfully",
+      data: updatedInquiry,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error updating status",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createInquiry,
   getAllInquiries,
-  deleteInquiry
+  deleteInquiry,
+  updateInquiryStatus
 };
