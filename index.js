@@ -10,7 +10,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8000;
 
 // MongoDB connection
-mongoose.connect(process.env.DBCON)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Database successfully connected");
   })

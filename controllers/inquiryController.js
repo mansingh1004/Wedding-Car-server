@@ -250,6 +250,49 @@ const deleteInquiry = async (req, res) => {
 
 
 
+// const updateInquiryStatus = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { status } = req.body;
+
+//     console.log("ID:", id);
+//     console.log("Status:", status);
+
+//     // Check valid ObjectId
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       return res.status(400).json({ message: "Invalid ID format" });
+//     }
+
+//     // Check status value
+//     const allowedStatus = ["Pending", "In Progress", "Completed", "Cancelled"];
+
+//     if (!allowedStatus.includes(status)) {
+//       return res.status(400).json({ message: "Invalid status value" });
+//     }
+
+//     const updatedInquiry = await InquiryModel.findByIdAndUpdate(
+//       id,
+//       { status },
+//       { new: true, runValidators: true }
+//     );
+
+//     if (!updatedInquiry) {
+//       return res.status(404).json({ message: "Inquiry not found" });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Status updated successfully",
+//       data: updatedInquiry,
+//     });
+
+//   } catch (error) {
+//     console.error("Update Error:", error);
+//     res.status(500).json({
+//       message: error.message
+//     });
+//   }
+// };
 
 
 
@@ -262,12 +305,12 @@ const updateInquiryStatus = async (req, res) => {
     const { status } = req.body; // Frontend se naya status aayega
 
     // Update query
-    const updatedInquiry = await Inquiry.findByIdAndUpdate(
+    const updatedInquiry = await InquiryModel.findByIdAndUpdate(
       id,
       { status: status },
       { new: true } // Ye option zaroori hai taaki updated data wapas mile
     );
-
+ console.log(updatedInquiry)
     if (!updatedInquiry) {
       return res.status(404).json({ success: false, message: "Inquiry not found" });
     }
