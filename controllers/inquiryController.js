@@ -208,6 +208,13 @@ const getAllInquiries = async (req, res) => {
       success: true,
       data: inquiries,
     });
+    res.json({
+   success: true,
+   data: inquiries,
+   count: inquiries.length
+})
+
+
   } catch (error) {
     console.error(error);
     res.status(500).json({
