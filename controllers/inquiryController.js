@@ -211,7 +211,7 @@ const getAllInquiries = async (req, res) => {
     res.json({
    success: true,
    data: inquiries,
-   count: inquiries.length
+   count: inquiries.length 
 })
 
 
